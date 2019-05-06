@@ -1,0 +1,3 @@
+/home/skloe/GPSv2/GPSv2/BUILD/CMakeFiles/rebuild_cache.dir
+/home/skloe/GPSv2/GPSv2/BUILD/CMakeFiles/testGPS.dir
+/home/skloe/GPSv2/GPSv2/BUILD/CMakeFiles/edit_cache.dir
