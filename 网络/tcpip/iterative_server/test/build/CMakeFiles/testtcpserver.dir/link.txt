@@ -1,0 +1,1 @@
+/usr/bin/c++   -O0 -Wall -Wextra -g -ggdb -pedantic   CMakeFiles/testtcpserver.dir/testtcpserver.cc.o  -o testtcpserver 

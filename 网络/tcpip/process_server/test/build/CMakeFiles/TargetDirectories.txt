@@ -1,0 +1,6 @@
+/home/skloe/Documents/Coding/网络/tcpip/process_server/test/build/CMakeFiles/edit_cache.dir
+/home/skloe/Documents/Coding/网络/tcpip/process_server/test/build/CMakeFiles/rebuild_cache.dir
+/home/skloe/Documents/Coding/网络/tcpip/process_server/test/build/CMakeFiles/testtcpclient2.dir
+/home/skloe/Documents/Coding/网络/tcpip/process_server/test/build/CMakeFiles/testtcpserver.dir
+/home/skloe/Documents/Coding/网络/tcpip/process_server/test/build/CMakeFiles/testtcpclient3.dir
+/home/skloe/Documents/Coding/网络/tcpip/process_server/test/build/CMakeFiles/testtcpclient.dir

@@ -11,6 +11,7 @@
 #define _TCPSERVER_H_
 
 #include <arpa/inet.h>
+#include <errno.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <stdio.h>
@@ -20,9 +21,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include <chrono>
+#include <iostream>
 #include <string>
+#include <thread>
 
-#include "common/logging/include/easylogging++.h"
+// #include "common/logging/include/easylogging++.h"
 
 namespace ASV {
 
@@ -38,32 +42,37 @@ class tcpserver {
                     int send_size) {
     read_fds = master;  // copy it
     if (select(fdmax + 1, &read_fds, NULL, NULL, NULL) == -1) {
-      CLOG(ERROR, "tcp-server") << "select: " << strerror(errno);
+      // CLOG(ERROR, "tcp-server") << "select: " << strerror(errno);
+      std::cout << "ERROR"
+                << "select: " << strerror(errno) << std::endl;
       results = 4;
     }
 
     // run through the existing connections looking for data to read
-    for (int i = 0; i <= fdmax; i++) {
-      if (FD_ISSET(i, &read_fds)) {  // we got one!!
-        if (i == listener) {         // handle new connections
+    for (int i = 0; i <= fdmax; i++) {  //迭代服务器,一个一个处理
+      if (FD_ISSET(i, &read_fds)) {     // we got one!!
+        if (i == listener) {            // handle new connections
           // newly accept()ed socket descriptor
           socklen_t addrlen = sizeof remoteaddr;
           int newfd =
               accept(listener, (struct sockaddr *)&remoteaddr, &addrlen);
 
           if (newfd == -1) {
-            CLOG(ERROR, "tcp-server") << "accept: " << strerror(errno);
+            // CLOG(ERROR, "tcp-server") << "accept: " << strerror(errno);
+            std::cout << "(ERROR, tcp-server)"
+                      << "accept: " << strerror(errno) << std::endl;
           } else {
             FD_SET(newfd, &master);  // add to master set
             if (newfd > fdmax) {     // keep track of the max
               fdmax = newfd;
             }
-            CLOG(INFO, "tcp-server")
-                << "selectserver: new connection from "
-                << inet_ntop(remoteaddr.ss_family,
-                             get_in_addr((struct sockaddr *)&remoteaddr),
-                             remoteIP, INET6_ADDRSTRLEN)
-                << " on socket " << std::to_string(newfd);
+            // CLOG(INFO, "tcp-server")
+            std::cout << "INFO tcp-server"
+                      << "selectserver: new connection from "
+                      << inet_ntop(remoteaddr.ss_family,
+                                   get_in_addr((struct sockaddr *)&remoteaddr),
+                                   remoteIP, INET6_ADDRSTRLEN)
+                      << " on socket " << std::to_string(newfd);
           }
         } else {
           // handle data from a client
@@ -72,10 +81,15 @@ class tcpserver {
             // got error or connection closed by client
             if (recv_bytes == 0) {
               // connection closed
-              CLOG(INFO, "tcp-server")
-                  << "selectserver: socket " << i << " hung up";
+              // CLOG(INFO, "tcp-server")
+              //     << "selectserver: socket " << i << " hung up";
+              std::cout << "INFO"
+                        << "selectserver: socket " << i << " hung up"
+                        << std::endl;
             } else {
-              CLOG(ERROR, "tcp-server") << "recv: " << strerror(errno);
+              // CLOG(ERROR, "tcp-server") << "recv: " << strerror(errno);
+              std::cout << "ERROR"
+                        << "recv: " << strerror(errno) << std::endl;
             }
             close(i);            // bye!
             FD_CLR(i, &master);  // remove from master set
@@ -83,7 +97,9 @@ class tcpserver {
             // we got some data from a client
             int send_bytes = send(i, send_buffer, send_size, 0);
             if (send_bytes == -1) {
-              CLOG(ERROR, "tcp-server") << "send: " << strerror(errno);
+              // CLOG(ERROR, "tcp-server") << "send: " << strerror(errno);
+              std::cout << "ERROR"
+                        << "recv: " << strerror(errno) << std::endl;
             }
           }
 
@@ -167,7 +183,8 @@ class tcpserver {
     }
     // if we got here, it means we didn't get bound
     if (p == NULL) {
-      CLOG(ERROR, "tcp-server") << "selectserver: failed to bind";
+      // CLOG(ERROR, "tcp-server") << "selectserver: failed to bind";
+      std::cout << "selectserver: failed to bind" << std::endl;
       results = 2;
     }
 
@@ -175,7 +192,9 @@ class tcpserver {
 
     // listen
     if (listen(listener, 10) == -1) {
-      CLOG(ERROR, "tcp-server") << "listen: " << strerror(errno);
+      // CLOG(ERROR, "tcp-server") << "listen: " << strerror(errno);
+      std::cout << "ERROR"
+                << "listen: " << strerror(errno) << std::endl;
       results = 3;
     }
 

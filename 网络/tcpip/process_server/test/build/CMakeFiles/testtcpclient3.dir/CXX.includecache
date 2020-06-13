@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/skloe/Documents/Coding/网络/tcpip/process_server/include/tcpclient.h
+arpa/inet.h
+-
+errno.h
+-
+netdb.h
+-
+netinet/in.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+sys/socket.h
+-
+sys/types.h
+-
+unistd.h
+-
+chrono
+-
+thread
+-
+
+/home/skloe/Documents/Coding/网络/tcpip/process_server/test/testtcpclient3.cc
+chrono
+-
+iostream
+-
+../include/tcpclient.h
+/home/skloe/Documents/Coding/网络/tcpip/process_server/include/tcpclient.h
+
