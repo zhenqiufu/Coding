@@ -1,0 +1,17 @@
+test_add (test_mathfunc.TestMathFunc) ... ok
+test_divide (test_mathfunc.TestMathFunc) ... FAIL
+test_minus (test_mathfunc.TestMathFunc) ... ok
+test_multi (test_mathfunc.TestMathFunc) ... ok
+
+======================================================================
+FAIL: test_divide (test_mathfunc.TestMathFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/skloe/Coding/python/test_mathfunc.py", line 26, in test_divide
+    self.assertEqual(2,divide(5,2))
+AssertionError: 2 != 2.5
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.005s
+
+FAILED (failures=1)
